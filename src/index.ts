@@ -1,16 +1,19 @@
 import "dotenv/config";
 import express from "express";
-import usersRoutes from "routes/UserRoute";
-import { authentication } from "middlewares/auth";
 import { DateTime } from "luxon";
+import { useContainer, useExpressServer } from "routing-controllers";
+import { diContainer } from "di-container";
+import { StatusCodes } from "http-status-codes";
 
 DateTime.local().setZone("America/Sao_Paulo");
 
 const app = express();
-
-app.use(express.json());
-app.get("/", (req, res) => {
-  return res.send("Hello World");
+useContainer(diContainer);
+useExpressServer(app,{
+  validation: true,
+  defaultErrorHandler: false,
 });
-app.use("/users", authentication, usersRoutes);
-app.listen(process.env.PORT || 3344);
+app.listen(3344);
+
+
+app.get("/", (req, res) => res.status(StatusCodes.OK).send());
