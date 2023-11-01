@@ -11,68 +11,38 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
-  id            Int       @id @default(autoincrement())
-  full_name     String
-  age           Int
-  weight        Decimal?
-  height        Decimal?
-  username      String    @unique
-  email         String    @unique
-  phone         String    @unique
-  password      String
-  instructor_id Int?
-  instructor    User?     @relation("member", fields: [instructor_id], references: [id])
-  members       User[]    @relation("member")
-  plan          Plan?
-  comment       Comment[] @relation("userComment")
-  created_at    DateTime  @default(now())
-  updated_at    DateTime?
+model Company {
+  id         Int            @id @default(autoincrement())
+  document   String         @unique
+  name       String
+  phone      String
+  email      String
+  password   String
+  id_segment Int
+  segment    CompanySegment @relation("segment", fields: [id_segment], references: [id])
+  categories Category[]     @relation("category")
 }
 
-model Plan {
-  id          Int       @id @default(autoincrement())
-  user_id     Int       @unique
-  user        User      @relation(fields: [user_id], references: [id])
-  description String
+model Product {
+  id          Int      @id @default(autoincrement())
   name        String
-  type        String
-  workout     Workout?
-  comment     Comment[] @relation("planComment")
-  created_at  DateTime  @default(now())
+  description String
+  image       String
+  price       String
+  id_category Int
+  category    Category @relation("product_category", fields: [id_category], references: [id])
 }
 
-model Workout {
-  id        Int                 @id @default(autoincrement())
+model Category {
+  id         Int       @id @default(autoincrement())
+  name       String
+  id_company Int
+  company    Company   @relation("category", fields: [id_company], references: [id])
+  products   Product[] @relation("product_category")
+}
+
+model CompanySegment {
+  id        Int       @id @default(autoincrement())
   name      String
-  plan_id   Int                 @unique
-  plan      Plan                @relation(fields: [plan_id], references: [id])
-  exercises ExerciseOnWorkout[]
-}
-
-model Exercise {
-  id           Int                 @id @default(autoincrement())
-  name         String
-  muscle_group String
-  description  String
-  workouts     ExerciseOnWorkout[]
-}
-
-model ExerciseOnWorkout {
-  workout     Workout  @relation(fields: [workout_id], references: [id])
-  workout_id  Int
-  exercise    Exercise @relation(fields: [exercise_id], references: [id])
-  exercise_id Int
-  created_at  DateTime @default(now())
-
-  @@id([workout_id, exercise_id])
-}
-
-model Comment {
-  id      Int    @id @default(autoincrement())
-  text    String
-  user_id Int
-  user    User   @relation("userComment", fields: [user_id], references: [id])
-  plan_id Int
-  plan    Plan   @relation("planComment", fields: [plan_id], references: [id])
+  companies Company[] @relation("segment")
 }
