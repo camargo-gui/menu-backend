@@ -1,9 +1,8 @@
 import { inject, injectable } from "inversify";
 import { noop } from "lib/noop";
-import { User } from "../ entities/user";
+import { Company } from "../entities/company";
 import { VerifyDataService } from "../services/verify-data-service";
 import { CreateUserService } from "../services/create-user-service";
-import { OnboardingErrorMessage } from "onboarding/adapters/services/messages/errorMessage";
 
 export interface OnboardingListeners {
   onSuccess: () => void;
@@ -23,22 +22,22 @@ export class OnboardingCommand {
   public onInternalError: () => Promise<void> = noop;
 
   public constructor(
-    @inject(VerifyDataService) private readonly verifyDataService: VerifyDataService,
-    @inject(CreateUserService) private readonly createUserService: CreateUserService
-  ) { }
+    @inject(VerifyDataService)
+    private readonly verifyDataService: VerifyDataService,
+    @inject(CreateUserService)
+    private readonly createUserService: CreateUserService
+  ) {}
 
-  public async execute(user: User): Promise<void> {
+  public async execute(company: Company): Promise<void> {
     try {
-      const isValid = await this.verifyDataService.verifyData(user);
-      if(!isValid){
-        this.onUserAlreadyExists("Dados inválidos")
+      const isValid = await this.verifyDataService.verifyData(company);
+      if (!isValid) {
+        this.onUserAlreadyExists("Dados inválidos");
       }
-      await this.createUserService.createUser(user, this.onInternalError);
+      await this.createUserService.createUser(company, this.onInternalError);
       this.onSuccess();
     } catch {
       this.onInternalError();
     }
   }
 }
-
-

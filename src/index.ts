@@ -6,7 +6,7 @@ import { StatusCodes } from "http-status-codes";
 import { InversifyExpressServer } from "inversify-express-utils";
 import { json } from "express";
 
-import './onboarding/adapters/controllers/onbording-controller'
+import './company/adapters/controllers/create-company-controller'
 
 
 

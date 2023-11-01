@@ -1,10 +1,10 @@
 import { injectable } from "inversify";
-import { User } from "../ entities/user";
+import { Company } from "../entities/company";
 
 @injectable()
 export abstract class VerifyDataService {
   abstract verifyData(
-    user: User
+    company: Company
   ): Promise<boolean>;
 
   abstract verifyPhone(
@@ -13,9 +13,5 @@ export abstract class VerifyDataService {
 
   abstract verifyEmail(
     email: string
-  ): Promise<boolean>;
-
-  abstract verifyUsername(
-    username: string
   ): Promise<boolean>;
 }
