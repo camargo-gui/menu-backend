@@ -8,12 +8,12 @@ import {
   requestBody,
   response,
 } from "inversify-express-utils";
-import { OnboardingCommand } from "company/ports/commands/create-company-command";
+import { CreateCompanyCommand } from "../../../company/ports/commands/create-company-command";
 
 @controller("/users")
 export class CreateCompanyController {
   public constructor(
-    @inject(OnboardingCommand) private readonly command: OnboardingCommand
+    @inject(CreateCompanyCommand) private readonly command: CreateCompanyCommand
   ) {}
 
   @httpPost("/")

@@ -1,7 +1,7 @@
-import { prismaClient } from "client/prisma-client";
+import { prismaClient } from "../../../client/prisma-client";
 import { injectable } from "inversify";
-import { Company } from "company/ports/entities/company";
-import { VerifyDataService } from "company/ports/services/verify-data-service";
+import { Company } from "../../../company/ports/entities/company";
+import { VerifyDataService } from "../../../company/ports/services/verify-data-service";
 
 @injectable()
 export class ConcreteVerifyDataService extends VerifyDataService {

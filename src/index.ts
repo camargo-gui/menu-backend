@@ -11,7 +11,7 @@ import './company/adapters/controllers/create-company-controller'
 
 
 DateTime.local().setZone("America/Sao_Paulo");
-
+console.log("oieee")
 const server = new InversifyExpressServer(diContainer);
 server.setConfig((app)=> app.use(json()))
 const app = server.build();

@@ -1,7 +1,7 @@
-import { prismaClient } from "client/prisma-client";
+import { prismaClient } from "../../../client/prisma-client";
 import { injectable } from "inversify";
-import { Company } from "company/ports/entities/company";
-import { CreateUserService } from "company/ports/services/create-user-service";
+import { Company } from "../../../company/ports/entities/company";
+import { CreateUserService } from "../../../company/ports/services/create-user-service";
 
 @injectable()
 export class PrismaCreateCompany extends CreateUserService {
@@ -13,9 +13,8 @@ export class PrismaCreateCompany extends CreateUserService {
       await prismaClient.company.create({
         data: company,
       });
-      console.log("entrou")
     } catch (e) {
-     console.log(e)
+      return onInternalError();
     }
   }
 }

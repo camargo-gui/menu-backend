@@ -1,8 +1,8 @@
 import { inject, injectable } from "inversify";
-import { noop } from "lib/noop";
 import { Company } from "../entities/company";
 import { VerifyDataService } from "../services/verify-data-service";
 import { CreateUserService } from "../services/create-user-service";
+import { noop } from "../../../lib/noop";
 
 export interface OnboardingListeners {
   onSuccess: () => void;
@@ -12,7 +12,7 @@ export interface OnboardingListeners {
 }
 
 @injectable()
-export class OnboardingCommand {
+export class CreateCompanyCommand {
   public onSuccess: () => Promise<void> = noop;
 
   public onUserAlreadyExists: (message: string) => Promise<void> = noop;
@@ -32,10 +32,10 @@ export class OnboardingCommand {
     try {
       const isValid = await this.verifyDataService.verifyData(company);
       if (!isValid) {
-        this.onUserAlreadyExists("Dados inválidos");
+        return this.onUserAlreadyExists("Dados inválidos");
       }
       await this.createUserService.createUser(company, this.onInternalError);
-      this.onSuccess();
+      return this.onSuccess();
     } catch {
       this.onInternalError();
     }
