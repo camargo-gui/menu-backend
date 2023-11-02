@@ -5,10 +5,10 @@ import {
   controller,
   httpPost,
   request,
-  requestBody,
   response,
 } from "inversify-express-utils";
 import { CreateCompanyCommand } from "../../../company/ports/commands/create-company-command";
+import { OnboardingErrorMessage } from "../services/messages/errorMessage";
 
 @controller("/users")
 export class CreateCompanyController {
@@ -22,7 +22,7 @@ export class CreateCompanyController {
     this.command.onInternalError = this.onInternalError(res);
     this.command.onUserAlreadyExists = this.onUserAlreadyExists(res);
     if (req.body.company) {
-      this.command.execute(req.body.company);
+      await this.command.execute(req.body.company);
     } else {
       this.onInternalError(res);
     }
@@ -42,11 +42,9 @@ export class CreateCompanyController {
 
   private onUserAlreadyExists(
     @response() res: Response
-  ): (message: string) => Promise<void> {
-    return async (): Promise<void> => {
-      (message: string) => {
-        res.status(StatusCodes.BAD_REQUEST).send(message);
-      };
+  ): (errors: OnboardingErrorMessage[]) => Promise<void> {
+    return async (errors): Promise<void> => {
+      res.status(StatusCodes.BAD_REQUEST).send({ errors: errors });
     };
   }
 }
