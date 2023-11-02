@@ -1,4 +1,4 @@
-# TPro - MVC Boiterplate
+# Menu - MVC Boiterplate
 
 Para rodar o projeto, siga os passos:
 

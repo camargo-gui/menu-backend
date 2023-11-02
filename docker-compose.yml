@@ -10,26 +10,29 @@ services:
     ports:
       - 5432:5432
     networks:
-      - tpro
+      - menu
     environment:
-      - POSTGRES_DB=tpro
-      - POSTGRES_USER=tpro
-      - POSTGRES_PASSWORD=tpro123
+      - POSTGRES_DB=menu
+      - POSTGRES_USER=menu
+      - POSTGRES_PASSWORD=menu123
 
   web:
     container_name: web
     build:
       context: .
       dockerfile: Dockerfile.dev
-    command: yarn dev
+    command: yarn debug
     volumes:
       - .:/usr/src/app
       - /usr/src/app/node_modules
     ports:
       - 3344:3344
-      - 5555:5555
+      - 5555:5555 
+      - 9229:9229
+    expose:
+      - 9229
     networks:
-      - tpro
+      - menu
     links:
       - db
     env_file:
@@ -39,5 +42,5 @@ services:
       - db
 
 networks:
-  tpro:
+  menu:
     driver: bridge

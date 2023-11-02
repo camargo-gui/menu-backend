@@ -1,10 +1,12 @@
-FROM --platform=linux/amd64 node:17
+FROM --platform=linux/amd64 node:16
 
 # Create app directory
 WORKDIR /usr/src/app
 
 # Bundle app source
 COPY . .
+
+COPY ./dist /usr/src/app/dist
 
 # Install app dependencies
 RUN yarn install
@@ -13,5 +15,6 @@ RUN yarn install
 RUN npm i -g prisma
 
 EXPOSE 3344
+EXPOSE 9229
 
 CMD [ "yarn", "dev" ]

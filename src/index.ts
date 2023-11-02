@@ -1,16 +1,20 @@
+import "reflect-metadata"
 import "dotenv/config";
-import express from "express";
-import usersRoutes from "routes/UserRoute";
-import { authentication } from "middlewares/auth";
 import { DateTime } from "luxon";
+import { diContainer } from "./di-container";
+import { StatusCodes } from "http-status-codes";
+import { InversifyExpressServer } from "inversify-express-utils";
+import { json } from "express";
+
+import './company/adapters/controllers/create-company-controller'
+
+
 
 DateTime.local().setZone("America/Sao_Paulo");
+console.log("oieee")
+const server = new InversifyExpressServer(diContainer);
+server.setConfig((app)=> app.use(json()))
+const app = server.build();
+app.listen(3344);
 
-const app = express();
-
-app.use(express.json());
-app.get("/", (req, res) => {
-  return res.send("Hello World");
-});
-app.use("/users", authentication, usersRoutes);
-app.listen(process.env.PORT || 3344);
+app.get("/", (req, res) => res.status(StatusCodes.OK).send("Olá"));

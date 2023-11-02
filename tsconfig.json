@@ -8,19 +8,24 @@
     "allowSyntheticDefaultImports": true,
     "moduleResolution": "node",
     "strict": true,
-    "baseUrl": "./src",
+    "baseUrl": "./",
     "sourceMap": true,
     "skipLibCheck": true,
+    "outDir": "./dist",
     "forceConsistentCasingInFileNames": true,
+    "lib": ["es6", "dom"],
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
     "paths": {
       "types/*": ["@types/*"],
       "controllers/*": ["controllers/*"],
       "models/*": ["models/*"],
       "routes/*": ["routes/*"],
       "dtos/*": ["dtos/*"],
-      "services/*": ["services/*"]
+      "services/*": ["services/*"],
+      "#/*": ["src/*"]
     }
   },
-  "include": ["src/**/*.ts"],
+  "include": ["src/**/*.ts", "src/index.ts"],
   "exclude": ["node_modules"]
 }

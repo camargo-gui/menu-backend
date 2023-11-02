@@ -8,6 +8,8 @@ WORKDIR /usr/src/app
 # Bundle app source
 COPY . .
 
+COPY ./dist /usr/src/app/dist
+
 # COPY .env
 # COPY .env.docker.example .env
 
@@ -15,5 +17,6 @@ COPY . .
 RUN yarn install
 
 EXPOSE 3344
+EXPOSE 9229
 
 CMD [ "yarn", "start" ]
