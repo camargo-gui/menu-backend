@@ -8,7 +8,7 @@
     "allowSyntheticDefaultImports": true,
     "moduleResolution": "node",
     "strict": true,
-    "baseUrl": "./src",
+    "baseUrl": "./",
     "sourceMap": true,
     "skipLibCheck": true,
     "outDir": "./dist",
@@ -22,7 +22,8 @@
       "models/*": ["models/*"],
       "routes/*": ["routes/*"],
       "dtos/*": ["dtos/*"],
-      "services/*": ["services/*"]
+      "services/*": ["services/*"],
+      "#/*": ["src/*"]
     }
   },
   "include": ["src/**/*.ts", "src/index.ts"],
