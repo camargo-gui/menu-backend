@@ -1,8 +1,8 @@
 up-build:
-	docker-compose up -d --build
+	sudo docker-compose up -d --build
 
 up:
-	docker-compose up -d
+	sudo docker-compose up -d
 	
 down:
-	docker-compose down -v
+	sudo docker-compose down -v

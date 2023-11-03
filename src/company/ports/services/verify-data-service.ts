@@ -6,7 +6,8 @@ import { OnboardingErrorMessage } from "../../../company/adapters/services/messa
 export abstract class VerifyDataService {
   abstract verifyData(
     company: Company,
-    onUserAlreadyExists: (errors: OnboardingErrorMessage[]) => Promise<void>
+    onUserAlreadyExists: (errors: OnboardingErrorMessage[]) => Promise<void>,
+    onInternalError: () => Promise<void>
   ): Promise<boolean>;
 
   abstract handleErrors(

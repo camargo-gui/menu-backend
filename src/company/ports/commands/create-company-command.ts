@@ -17,7 +17,9 @@ export interface OnboardingListeners {
 export class CreateCompanyCommand {
   public onSuccess: () => Promise<void> = noop;
 
-  public onUserAlreadyExists: (errors: OnboardingErrorMessage[]) => Promise<void> = noop;
+  public onUserAlreadyExists: (
+    errors: OnboardingErrorMessage[]
+  ) => Promise<void> = noop;
 
   public onIncorrectData: () => Promise<void> = noop;
 
@@ -34,10 +36,18 @@ export class CreateCompanyCommand {
 
   public async execute(company: Company): Promise<void> {
     try {
-      const isAvaiable = await this.verifyDataService.verifyData(company, this.onUserAlreadyExists);
-      if(isAvaiable){
+      const isAvaiable = await this.verifyDataService.verifyData(
+        company,
+        this.onUserAlreadyExists,
+        this.onInternalError
+      );
+      if (isAvaiable) {
         const plainCompany = this.plainCompany.execute(company);
-        await this.createUserService.createUser(plainCompany, this.onInternalError, this.onSuccess);
+        await this.createUserService.createUser(
+          plainCompany,
+          this.onInternalError,
+          this.onSuccess
+        );
       }
     } catch {
       return this.onInternalError();
