@@ -24,7 +24,7 @@ export class CreateCompanyController {
     if (req.body.company) {
       await this.command.execute(req.body.company);
     } else {
-      this.onInternalError(res);
+      this.onIncorrectData(res);
     }
   }
 
@@ -44,7 +44,13 @@ export class CreateCompanyController {
     @response() res: Response
   ): (errors: OnboardingErrorMessage[]) => Promise<void> {
     return async (errors): Promise<void> => {
-      res.status(StatusCodes.BAD_REQUEST).send({ errors: errors });
+      res.status(StatusCodes.CONFLICT).send({ errors: errors });
+    };
+  }
+
+  private onIncorrectData(@response() res: Response): () => Promise<void> {
+    return async (): Promise<void> => {
+      res.status(StatusCodes.BAD_REQUEST).send();
     };
   }
 }

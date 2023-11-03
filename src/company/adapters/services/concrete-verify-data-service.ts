@@ -18,7 +18,7 @@ export class ConcreteVerifyDataService extends VerifyDataService {
         return true;
       }
     } catch (e) {
-      console.log(e);
+      throw new Error();
     }
     return false;
   }
@@ -34,26 +34,25 @@ export class ConcreteVerifyDataService extends VerifyDataService {
         return true;
       }
     } catch (e) {
-      console.log(e);
+      throw new Error();
     }
 
     return false;
   }
 
   async verifyDocument(document: string): Promise<boolean> {
-    try{
+    try {
       const existingCompany = await prismaClient.company.findFirst({
-        where:{
-          document
-        }
+        where: {
+          document,
+        },
       });
-      if(!existingCompany){
+      if (!existingCompany) {
         return true;
       }
-    }catch(e){
-      console.log(e);
+    } catch (e) {
+      throw new Error();
     }
-
     return false;
   }
 
@@ -65,7 +64,8 @@ export class ConcreteVerifyDataService extends VerifyDataService {
     const errors = [];
     if (!isEmailValid) errors.push(OnboardingErrorMessage.emailAlreadyExists);
     if (!isPhoneValid) errors.push(OnboardingErrorMessage.phoneAlreadyExists);
-    if (!isDocumentValid) errors.push(OnboardingErrorMessage.documentAlreadyExists);
+    if (!isDocumentValid)
+      errors.push(OnboardingErrorMessage.documentAlreadyExists);
     return errors;
   }
 
@@ -75,19 +75,24 @@ export class ConcreteVerifyDataService extends VerifyDataService {
 
   public async verifyData(
     company: Company,
-    onUserAlreadyExists: (errors: OnboardingErrorMessage[]) => Promise<void>
+    onUserAlreadyExists: (errors: OnboardingErrorMessage[]) => Promise<void>,
+    onInternalError: () => Promise<void>
   ): Promise<boolean> {
     try {
       const isEmailValid = await this.verifyEmail(company.email);
       const isPhoneValid = await this.verifyPhone(company.phone);
       const isDocumentValid = await this.verifyDocument(company.document);
-      const errors = this.handleErrors(isEmailValid, isPhoneValid, isDocumentValid);
+      const errors = this.handleErrors(
+        isEmailValid,
+        isPhoneValid,
+        isDocumentValid
+      );
       if (!this.hasError(errors)) {
         return true;
       }
       onUserAlreadyExists(errors);
     } catch (e) {
-      console.log(e);
+      onInternalError();
     }
     return false;
   }

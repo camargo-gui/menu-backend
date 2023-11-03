@@ -1,5 +1,4 @@
 export class Company {
-
   public constructor(
         public name: string,
         public document: string,
