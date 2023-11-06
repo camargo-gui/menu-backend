@@ -6,9 +6,9 @@ services:
     image: postgres:15
     restart: always
     expose:
-      - 5454
+      - 5432
     ports:
-      - 5454:5454
+      - 5432:5432
     networks:
       - menu
     environment:
