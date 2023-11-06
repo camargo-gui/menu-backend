@@ -1,4 +1,4 @@
-import "reflect-metadata"
+import "reflect-metadata";
 import "dotenv/config";
 import { DateTime } from "luxon";
 import { diContainer } from "./di-container";
@@ -6,14 +6,14 @@ import { StatusCodes } from "http-status-codes";
 import { InversifyExpressServer } from "inversify-express-utils";
 import { json } from "express";
 
-import './company/adapters/controllers/create-company-controller'
+import "./company/adapters/controllers/create-company-controller";
+import "./company/adapters/controllers/login-controller";
 
 
 
 DateTime.local().setZone("America/Sao_Paulo");
-console.log("oieee")
 const server = new InversifyExpressServer(diContainer);
-server.setConfig((app)=> app.use(json()))
+server.setConfig((app)=> app.use(json()));
 const app = server.build();
 app.listen(3344);
 

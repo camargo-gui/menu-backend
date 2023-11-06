@@ -5,18 +5,18 @@ import { CreateUserService } from "../../../company/ports/services/create-user-s
 
 @injectable()
 export class PrismaCreateCompany extends CreateUserService {
-  async createUser(
-    company: Company,
-    onInternalError: () => Promise<void>,
-    onSuccess: () => Promise<void>
-  ): Promise<void> {
-    try {
-      await prismaClient.company.create({
-        data: company,
-      });
-      return onSuccess();
-    } catch (e) {
-      return onInternalError();
+    async createUser(
+        company: Company,
+        onInternalError: () => Promise<void>,
+        onSuccess: () => Promise<void>
+    ): Promise<void> {
+        try {
+            await prismaClient.company.create({
+                data: company,
+            });
+            return onSuccess();
+        } catch (e) {
+            return onInternalError();
+        }
     }
-  }
 }

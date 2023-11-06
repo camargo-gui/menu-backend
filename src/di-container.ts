@@ -8,6 +8,11 @@ import { CryptoPasswordHash } from "./company/adapters/services/crypto-password-
 import { PlainCompany } from "./company/ports/plain-company";
 import { ConcretePlainCompany } from "./company/adapters/concrete-plain-company";
 import { PasswordHash } from "./company/ports/services/password-hash";
+import { LoginService } from "./company/ports/services/login-service";
+import { PrismaLoginService } from "./company/adapters/services/prisma-login-service";
+import { LoginCommand } from "./company/ports/commands/login-command";
+import { TokenService } from "./company/ports/services/token-service";
+import { JwtTokenService } from "./company/adapters/services/jwt-token-service";
 
 const diContainer = new Container();
 
@@ -16,5 +21,9 @@ diContainer.bind(CreateUserService).to(PrismaCreateCompany);
 diContainer.bind(VerifyDataService).to(ConcreteVerifyDataService);
 diContainer.bind(PasswordHash).to(CryptoPasswordHash);
 diContainer.bind(PlainCompany).to(ConcretePlainCompany);
+
+diContainer.bind(LoginCommand).toSelf();
+diContainer.bind(LoginService).to(PrismaLoginService);
+diContainer.bind(TokenService).to(JwtTokenService);
 
 export {diContainer};
