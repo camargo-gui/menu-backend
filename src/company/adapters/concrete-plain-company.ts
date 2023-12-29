@@ -6,25 +6,26 @@ import { inject, injectable } from "inversify";
 @injectable()
 export class ConcretePlainCompany extends PlainCompany {
 
-  constructor(
+    constructor(
         @inject(PasswordHash) private readonly passwordHash: PasswordHash
-  ){
-    super();
-  }
+    ){
+        super();
+    }
 
-  public execute(company: Company): Company{
-    const password = this.passwordHash.create(company.password);
+    public execute(company: Company): Company{
+        const password = this.passwordHash.create(company.password);
 
 
-    const plainedCompany = new Company(
-      company.name,
-      company.document,
-      company.phone,
-      company.email,
-      password,
-      company.id_segment
-    );
+        const plainedCompany = new Company(
+            company.id,
+            company.name,
+            company.document,
+            company.phone,
+            company.email,
+            password,
+            company.id_segment
+        );
 
-    return plainedCompany;
-  }
+        return plainedCompany;
+    }
 }
