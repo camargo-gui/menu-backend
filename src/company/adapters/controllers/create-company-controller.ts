@@ -1,3 +1,4 @@
+import { CreateCompanyCommand } from "./../../ports/commands/create-company-command";
 import { Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 import { inject } from "inversify";
@@ -7,7 +8,6 @@ import {
     request,
     response,
 } from "inversify-express-utils";
-import { CreateCompanyCommand } from "../../../company/ports/commands/create-company-command";
 import { OnboardingErrorMessage } from "../services/messages/errorMessage";
 
 @controller("/company")
@@ -17,7 +17,7 @@ export class CreateCompanyController {
     ) {}
 
   @httpPost("/")
-    public async createUser(@request() req: Request, @response() res: Response) {
+    public async createCompany(@request() req: Request, @response() res: Response) {
         this.command.onSuccess = this.onSuccess(res);
         this.command.onInternalError = this.onInternalError(res);
         this.command.onUserAlreadyExists = this.onUserAlreadyExists(res);

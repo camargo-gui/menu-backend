@@ -8,6 +8,7 @@ import { json } from "express";
 
 import "./company/adapters/controllers/create-company-controller";
 import "./company/adapters/controllers/login-controller";
+import "./company/adapters/controllers/delete-company-controller";
 
 
 

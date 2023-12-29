@@ -1,5 +1,6 @@
 import { injectable } from "inversify";
 import { Company } from "../entities/company";
+import { DefaultListeners } from "../dto/default-listeners";
 
 @injectable()
 export abstract class CompanyRepository {
@@ -20,5 +21,13 @@ export abstract class CompanyRepository {
   abstract getByDocument(
     document: string,
   ): Promise<Company | null>
+
+  abstract delete(
+    id: number,
+    {
+        onInternalError,
+        onSuccess
+    }: DefaultListeners
+  ): Promise<void>
 
 }

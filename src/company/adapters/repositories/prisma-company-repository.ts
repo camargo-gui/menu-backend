@@ -2,6 +2,7 @@ import { prismaClient } from "../../../client/prisma-client";
 import { injectable } from "inversify";
 import { Company } from "../../ports/entities/company";
 import { CompanyRepository } from "#/company/ports/repositories/company-repository";
+import { DefaultListeners } from "#/company/ports/dto/default-listeners";
 
 
 @injectable()
@@ -45,4 +46,22 @@ export class PrismaCompanyRepository extends CompanyRepository {
         }
     }
 
+    async delete(
+        id: number,
+        {
+            onInternalError,
+            onSuccess,
+        }: DefaultListeners
+    ): Promise<void> {
+        try {
+            await prismaClient.company.delete({
+                where: {
+                    id
+                }
+            });
+            return onSuccess();
+        } catch(e) {
+            return onInternalError();
+        }
+    }
 }

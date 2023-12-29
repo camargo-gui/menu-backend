@@ -18,5 +18,6 @@ RUN yarn install
 
 EXPOSE 3344
 EXPOSE 9229
+EXPOSE 5432
 
 CMD [ "yarn", "start" ]

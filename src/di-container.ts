@@ -13,6 +13,7 @@ import { LoginCommand } from "./company/ports/commands/login-command";
 import { TokenService } from "./company/ports/services/token-service";
 import { JwtTokenService } from "./company/adapters/services/jwt-token-service";
 import { PrismaCompanyRepository } from "#/company/adapters/repositories/prisma-company-repository";
+import { DeleteCompanyCommand } from "./company/ports/commands/delete-company-command";
 
 const diContainer = new Container();
 
@@ -22,6 +23,7 @@ diContainer.bind(CompanyRepository).to(PrismaCompanyRepository);
 diContainer.bind(VerifyDataService).to(ConcreteVerifyDataService);
 diContainer.bind(PasswordHash).to(CryptoPasswordHash);
 diContainer.bind(PlainCompany).to(ConcretePlainCompany);
+diContainer.bind(DeleteCompanyCommand).toSelf();
 
 //Login
 diContainer.bind(LoginCommand).toSelf();
