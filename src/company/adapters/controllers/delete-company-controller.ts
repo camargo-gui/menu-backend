@@ -15,7 +15,6 @@ export class DeleteCompanyController {
     public async deleteCompany(@request() req: Request, @response() res: Response, id: number) {
         this.command.onSuccess = this.onSuccess(res);
         this.command.onInternalError = this.onInternalError(res);
-
         try{
             await this.command.execute(id);
         } catch {
