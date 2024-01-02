@@ -14,8 +14,13 @@ import { TokenService } from "./company/ports/services/token-service";
 import { JwtTokenService } from "./company/adapters/services/jwt-token-service";
 import { PrismaCompanyRepository } from "#/company/adapters/repositories/prisma-company-repository";
 import { DeleteCompanyCommand } from "./company/ports/commands/delete-company-command";
+import { JwtAuthMiddlewareHandler } from "#/company/adapters/middlewares/jwt-auth-middleware";
+
 
 const diContainer = new Container();
+
+//Middleware
+diContainer.bind(JwtAuthMiddlewareHandler).toSelf();
 
 //Company
 diContainer.bind(CreateCompanyCommand).toSelf();

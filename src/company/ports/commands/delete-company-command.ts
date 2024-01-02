@@ -22,6 +22,7 @@ export class DeleteCompanyCommand {
     public async execute(id: number): Promise<void> {
         try{
             await this.companyRepository.delete(id, this.listeners);
+            return this.onSuccess();
         } catch {
             return this.onInternalError();
         }
