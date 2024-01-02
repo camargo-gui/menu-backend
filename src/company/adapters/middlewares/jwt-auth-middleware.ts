@@ -31,7 +31,6 @@ export class JwtAuthMiddlewareHandler extends AuthMiddleware {
         catch (e) {
             this.onInternalError(res);
         }
-        next();
     }
 
     private onUnauthorized(@response() res: Response): () => Promise<void> {
