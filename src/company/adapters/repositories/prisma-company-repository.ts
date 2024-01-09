@@ -1,8 +1,8 @@
 import { prismaClient } from "../../../client/prisma-client";
 import { injectable } from "inversify";
 import { Company } from "../../ports/entities/company";
-import { CompanyRepository } from "#/company/ports/repositories/company-repository";
-import { DefaultListeners } from "#/company/ports/dto/default-listeners";
+import { CompanyRepository } from "../../../company/ports/repositories/company-repository";
+import { DefaultListeners } from "../../../company/ports/dto/default-listeners";
 
 
 @injectable()

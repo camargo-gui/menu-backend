@@ -1,5 +1,5 @@
-import { JwtAuthPayload } from "#/company/adapters/dto/jwt-auth-payload";
-import { TokenService } from "#/company/ports/services/token-service";
+import { JwtAuthPayload } from "../../../company/adapters/dto/jwt-auth-payload";
+import { TokenService } from "../../../company/ports/services/token-service";
 import { injectable } from "inversify";
 import { sign, verify } from "jsonwebtoken";
 
@@ -16,6 +16,7 @@ export class JwtTokenService extends TokenService {
     verify(token: string): JwtAuthPayload | undefined {
         try {
             const payload = verify(token, this.secretKey) as JwtAuthPayload;
+            console.log(payload);
             return payload;
         } catch {
             return undefined;

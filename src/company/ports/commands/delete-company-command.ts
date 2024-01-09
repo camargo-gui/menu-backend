@@ -1,5 +1,5 @@
-import { CompanyRepository } from "#/company/ports/repositories/company-repository";
-import { noop } from "#/lib/noop";
+import { CompanyRepository } from "../../../company/ports/repositories/company-repository";
+import { noop } from "../../../lib/noop";
 import { inject, injectable } from "inversify";
 import { DefaultListeners } from "../dto/default-listeners";
 

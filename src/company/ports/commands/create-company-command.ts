@@ -4,7 +4,7 @@ import { VerifyDataService } from "../services/verify-data-service";
 import { noop } from "../../../lib/noop";
 import { OnboardingErrorMessage } from "../../../company/adapters/services/messages/errorMessage";
 import { PlainCompany } from "../plain-company";
-import { CompanyRepository } from "#/company/ports/repositories/company-repository";
+import { CompanyRepository } from "../../../company/ports/repositories/company-repository";
 
 export interface OnboardingListeners {
   onSuccess: () => void;

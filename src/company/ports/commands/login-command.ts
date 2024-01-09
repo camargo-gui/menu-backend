@@ -1,4 +1,4 @@
-import { noop } from "#/lib/noop";
+import { noop } from "../../../lib/noop";
 import { inject, injectable } from "inversify";
 import { LoginData } from "../dto/login-data";
 import { LoginService } from "../services/login-service";

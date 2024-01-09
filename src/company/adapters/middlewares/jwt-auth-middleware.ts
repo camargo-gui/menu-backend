@@ -1,55 +1,34 @@
 import { inject, injectable } from "inversify";
-import { JwtTokenService } from "../services/jwt-token-service";
-import { StatusCodes } from "http-status-codes";
-import { Response, Request, NextFunction, RequestHandler } from "express";
-import { response } from "inversify-express-utils";
-import { getFromContainer } from "routing-controllers";
-import { AuthMiddleware } from "#/company/ports/middleware/auth-middleware";
+import { Request,} from "express";
+import { AuthMiddleware } from "../../../company/ports/middleware/auth-middleware";
+import { TokenService } from "../../../company/ports/services/token-service";
+import { AuthListeners } from "#/company/ports/dto/auth-listeners";
 
 @injectable()
 export class JwtAuthMiddlewareHandler extends AuthMiddleware {
     public constructor(
-      @inject(JwtTokenService)
-      private readonly jwtTokenService: JwtTokenService
+      @inject(TokenService)
+      private readonly jwtTokenService: TokenService
     ){
         super();
     }
 
-    use(req: Request, res: Response, next: NextFunction): void{
+    public async auth(req: Request, listeners: AuthListeners): Promise<void>{
         try{
+            console.log("entrou");
             const token = req.headers.authorization;
+            console.log("token ", token);
             if(token === undefined) {
-                this.onUnauthorized(res);
-                return;
+                return listeners.onUnauthorized();
             }
-            const payload = this.jwtTokenService.verify(token);
-            if(payload){
-                return next();
+            const payload = await this.jwtTokenService.verify(token);
+            console.log(payload);
+            if(!payload){
+                return listeners.onUnauthorized();
             }
-            this.onUnauthorized(res);
         }
         catch (e) {
-            this.onInternalError(res);
+            return listeners.onInternalError();
         }
     }
-
-    private onUnauthorized(@response() res: Response): () => Promise<void> {
-        return async (): Promise<void> => {
-            res.status(StatusCodes.UNAUTHORIZED).send();
-        };
-    }
-  
-    private onInternalError(@response() res: Response): () => Promise<void> {
-        return async (): Promise<void> => {
-            res.status(StatusCodes.INTERNAL_SERVER_ERROR).send();
-        };
-    }
-}
-
-export function JwtAuthMiddleware (): RequestHandler {
-    console.log("teste");
-    return async (req: Request, res: Response, next: NextFunction):Promise<void> => 
-        getFromContainer(JwtAuthMiddlewareHandler)
-            .use(req, res, next);
-       
 }

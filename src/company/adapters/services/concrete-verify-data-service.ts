@@ -2,7 +2,7 @@ import { inject, injectable } from "inversify";
 import { Company } from "../../ports/entities/company";
 import { VerifyDataService } from "../../ports/services/verify-data-service";
 import { OnboardingErrorMessage } from "./messages/errorMessage";
-import { CompanyRepository } from "#/company/ports/repositories/company-repository";
+import { CompanyRepository } from "../../../company/ports/repositories/company-repository";
 
 @injectable()
 export class ConcreteVerifyDataService extends VerifyDataService {

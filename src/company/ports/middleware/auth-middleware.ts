@@ -1,5 +1,8 @@
-import {Request, Response,  NextFunction } from "express";
+import { AuthListeners } from "#/company/ports/dto/auth-listeners";
+import {Request } from "express";
+import { injectable } from "inversify";
 
+@injectable()
 export abstract class AuthMiddleware {
-  abstract use(req: Request, res: Response, next: NextFunction):void
+  abstract auth(req: Request, listeners: AuthListeners):void
 }

@@ -1,4 +1,4 @@
-import { LoginCommand } from "#/company/ports/commands/login-command";
+import { LoginCommand } from "../../../company/ports/commands/login-command";
 import { Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 import { inject } from "inversify";

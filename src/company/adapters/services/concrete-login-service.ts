@@ -1,6 +1,6 @@
-import { CompanyRepository } from "#/company/ports/repositories/company-repository";
+import { CompanyRepository } from "../../../company/ports/repositories/company-repository";
 
-import { LoginDatabaseReturn, LoginService } from "#/company/ports/services/login-service";
+import { LoginDatabaseReturn, LoginService } from "../../../company/ports/services/login-service";
 import { inject, injectable } from "inversify";
 
 @injectable()
